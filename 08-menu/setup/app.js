@@ -99,13 +99,14 @@ function displayMenuItems(originalDoc){
 }
 
 function displayMenuButtons(){
+  //count how many categories are there in the original document in case there comes a new category ="dinner".
   const categories = menu.reduce(function(beginValue, ori){
     if(!beginValue.includes(ori.category)){
       beginValue.push(ori.category);
     }
     return beginValue;
   }, ["all"]);
-
+ //instead of hard code in HTML, we can inject dynamic codes in HTML
   const categoryBtns = categories.map(function(category){
     return `<button type="button" class="filter-btn" data-id=${category}>
             ${category}
@@ -113,10 +114,11 @@ function displayMenuButtons(){
   }).join("");
 
   btnContainer.innerHTML = categoryBtns;
-
+ //After the dynamic buttons are injected in HTML, we can now choose those buttons
   const filterBtns = btnContainer.querySelectorAll(".filter-btn")
   console.log(filterBtns);
-
+  //when click on a button, get the category of the chozen button and see if it equals to any category from the original document, if matches,
+  // the webpage should show the array that contains the item from the original document.
   filterBtns.forEach(function(btn){
     btn.addEventListener("click", function(e){
       const chozenCategory = e.currentTarget.dataset.id;
@@ -126,6 +128,7 @@ function displayMenuButtons(){
         }
       });
       if(chozenCategory === "all"){
+        //use the existing methods to show and inject content in HTML.
         displayMenuItems(menu);
       }else{
         displayMenuItems(oriCategory);
